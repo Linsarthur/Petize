@@ -1,4 +1,4 @@
-import { Button, Center, Flex, Input, Text } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Input, Text } from "@chakra-ui/react";
 import { theme } from "../Themes/Themes";
 import lupa from "../assets/Vector.png";
 const Home = () => {
@@ -6,7 +6,7 @@ const Home = () => {
     <>
       <Center>
         <Flex justify="center" align="center" pt="80" direction="column">
-          <div>
+          <Box>
             <Text fontSize="50px" mb="14px">
               <Text as="span" color={theme.colors.brand.primary}>
                 Search{" "}
@@ -15,23 +15,32 @@ const Home = () => {
                 d_evs
               </Text>
             </Text>
-          </div>
+          </Box>
 
-          <div>
+          <Box>
             <Flex gap="5" mx={5}>
               <Input
+                w={{ sm: "60vw", md: "50vw", lg: "40vw", xl: "25vw" }}
                 bgImg={lupa}
                 bgRepeat="no-repeat"
                 bgPosition="12px center"
                 px={10}
                 placeholder="Github Profile"
+                focusBorderColor={theme.colors.brand.secondary}
               />
-              <Button size="md" w="150px" bgColor={theme.colors.brand.secondary} color="white">
+              <Button
+                className="btn"
+                size="md"
+                w="150px"
+                bgColor={theme.colors.brand.secondary}
+                color="white"
+                _hover={{ bgColor: theme.colors.brand.primary }}
+              >
                 {" "}
                 Search{" "}
               </Button>
             </Flex>
-          </div>
+          </Box>
         </Flex>
       </Center>
     </>
