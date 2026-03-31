@@ -1,8 +1,8 @@
 import { ChakraProvider, theme } from "@chakra-ui/react";
-import "./App.css";
-import Paths from "./routes/Paths";
 
-function App() {
+import Paths from "./routes/Paths.tsx";
+
+const App = () => {
   return (
     <>
       <ChakraProvider theme={theme}>
@@ -10,6 +10,6 @@ function App() {
       </ChakraProvider>
     </>
   );
-}
+};
 
 export default App;

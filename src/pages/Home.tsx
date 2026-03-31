@@ -1,6 +1,7 @@
 import { Box, Button, Center, Flex, Input, Text } from "@chakra-ui/react";
 import { theme } from "../themes/Themes";
 import search from "../assets/Vector.png";
+
 const Home = () => {
   return (
     <>
