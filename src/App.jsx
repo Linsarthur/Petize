@@ -1,11 +1,13 @@
-
+import { ChakraProvider, theme } from "@chakra-ui/react";
 import "./App.css";
-import Home from "./Pages/Home";
+import Paths from "./routes/Paths";
 
 function App() {
   return (
     <>
-      <Home />
+      <ChakraProvider theme={theme}>
+        <Paths />
+      </ChakraProvider>
     </>
   );
 }

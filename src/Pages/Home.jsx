@@ -1,6 +1,6 @@
 import { Box, Button, Center, Flex, Input, Text } from "@chakra-ui/react";
-import { theme } from "../Themes/Themes";
-import lupa from "../assets/Vector.png";
+import { theme } from "../themes/Themes";
+import search from "../assets/Vector.png";
 const Home = () => {
   return (
     <>
@@ -21,7 +21,7 @@ const Home = () => {
             <Flex gap="5" mx={5}>
               <Input
                 w={{ sm: "60vw", md: "50vw", lg: "40vw", xl: "25vw" }}
-                bgImg={lupa}
+                bgImg={search}
                 bgRepeat="no-repeat"
                 bgPosition="12px center"
                 px={10}
