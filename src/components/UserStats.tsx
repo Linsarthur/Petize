@@ -1,7 +1,7 @@
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
 
 interface UserStatsProps {
-  text: string;
+  text:  string;
   image: string;
 }
 
