@@ -1,9 +1,8 @@
 import { Box, Button, Center, Flex, Input, Text } from "@chakra-ui/react";
 import { theme } from "../themes/Themes";
 import search from "../assets/Vector.png";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { useState } from "react";
-import type { userProps } from "../types/user";
 import { useUser } from "../context/UserContext";
 
 const Home = () => {
@@ -13,7 +12,7 @@ const Home = () => {
 
   const handleSearch = async () => {
     await loadUser(userName);
-    navigate("/profile");
+    navigate(`/profile?user=${userName}`);
   };
 
   return (
@@ -43,20 +42,19 @@ const Home = () => {
                 placeholder="Github Profile"
                 focusBorderColor={theme.colors.brand.secondary}
               />
-              
-                <Button
-                  onClick={handleSearch}
-                  className="btn"
-                  size="md"
-                  w="150px"
-                  bgColor={theme.colors.brand.secondary}
-                  color="white"
-                  _hover={{ bgColor: theme.colors.brand.primary }}
-                >
-                  {" "}
-                  Search
-                </Button>
-              
+
+              <Button
+                onClick={handleSearch}
+                className="btn"
+                size="md"
+                w="150px"
+                bgColor={theme.colors.brand.secondary}
+                color="white"
+                _hover={{ bgColor: theme.colors.brand.primary }}
+              >
+                {" "}
+                Search
+              </Button>
             </Flex>
           </Box>
         </Flex>
