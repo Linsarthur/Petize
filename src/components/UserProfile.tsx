@@ -16,11 +16,14 @@ import userEmail from "../assets/mail.png";
 import userLink from "../assets/link.png";
 import userTwitter from "../assets/twitter.png";
 import { theme } from "../themes/Themes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserStats from "./UserStats";
 import { useUser } from "../context/UserContext";
+import { useSearchParams } from "react-router";
 
 const UserProfile = () => {
+  const [searchParams] = useSearchParams();
+  const { loadUser } = useUser();
   const { user } = useUser();
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
@@ -41,12 +44,17 @@ const UserProfile = () => {
     email,
   } = user;
 
+  useEffect(() => {
+    const user = searchParams.get("user");
+    if (user) loadUser(user);
+  }, [searchParams]);
+
   return (
     <>
       <Container color={theme.colors.brand.colorInfoUser}>
         <Box>
-          <Flex gap={4}>
-            <Image src={avatar_url} alt={login} />
+          <Flex gap={4} align="center">
+            <Image src={avatar_url} alt={login} w="25%" rounded={"full"} />
             <Box>
               <Text fontSize="20px" fontWeight="700" color={"black"}>
                 {name}
@@ -64,7 +72,7 @@ const UserProfile = () => {
           </Flex>
         </Box>
         <Collapse startingHeight={45} in={show}>
-          <Box>{bio}</Box>
+          <Box pt={4}>{bio}</Box>
 
           <Box pt={5}>
             <UserStats text={followers + " Seguidores"} image={userFollowers} />
@@ -77,15 +85,7 @@ const UserProfile = () => {
               <UserStats text={twitterUserName} image={userTwitter} />
             )}
           </Box>
-          <Center pt={5} pb={5}>
-            <Button
-              bgColor={theme.colors.brand.secondary}
-              color="#FFFFFF"
-              _hover={{ bgColor: theme.colors.brand.primary }}
-            >
-              Contato
-            </Button>
-          </Center>
+          
         </Collapse>
         <Button
           mt={5}

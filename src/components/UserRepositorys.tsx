@@ -28,6 +28,8 @@ const UserRepositorys = ({
         borderBottom="1px"
         pb={5}
         borderColor={theme.colors.brand.borderColor}
+        w={{ base: "90vw", md: "60vw", lg: "50vw", xl: "40vw" }}
+        minH="100px"
       >
         <Text>
           <Text
@@ -37,10 +39,11 @@ const UserRepositorys = ({
             color="#000000"
             fontWeight="700"
             fontSize="20px"
+            noOfLines={1}
           >
             {name}
           </Text>
-          <Text color={theme.colors.brand.colorInfoUser}>
+          <Text color={theme.colors.brand.colorInfoUser} noOfLines={2}>
             {description || "Sem descrição"}
           </Text>
         </Text>
