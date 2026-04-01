@@ -12,10 +12,10 @@ const Home = () => {
 
   const handleSearch = async () => {
     await loadUser(userName);
+    navigate(`/profile/${userName}`);
   };
-
   useEffect(() => {
-    if (user) navigate("/profile");
+    if (user) navigate("/profile/:username");
   }, [user]);
 
   return (
