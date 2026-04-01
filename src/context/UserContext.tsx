@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import type { userProps } from "../types/user";
+import { UserSchema } from "../schemas/github";
 
 type UserContextType = {
   user: userProps | null;
@@ -37,23 +38,30 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     const data = await res.json();
 
     if (data.message === "Not Found") {
-      setError("Não há usuários com esse nome.");
+      setError("Not found");
+      return;
+    }
+
+    const parsed = UserSchema.safeParse(data);
+
+    if (!parsed.success) {
+      setError("parseError");
       return;
     }
 
     setUser({
-      avatar_url: data.avatar_url,
-      login: data.login,
-      name: data.name,
-      bio: data.bio,
-      location: data.location,
-      followers: data.followers,
-      following: data.following,
-      company: data.company,
-      email: data.email,
-      twitterUserName: data.twitter_username,
-      siteAdmin: data.site_admin,
-      blog: data.blog,
+      avatar_url: parsed.data.avatar_url,
+      login: parsed.data.login,
+      name: parsed.data.name ?? "",
+      bio: parsed.data.bio ?? "",
+      location: parsed.data.location ?? "",
+      followers: parsed.data.followers,
+      following: parsed.data.following,
+      company: parsed.data.company ?? "",
+      email: parsed.data.email ?? "",
+      twitterUserName: parsed.data.twitter_username ?? "",
+      siteAdmin: String(parsed.data.site_admin),
+      blog: parsed.data.blog ?? "",
     });
   };
 
