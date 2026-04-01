@@ -20,16 +20,22 @@ import { useEffect, useState } from "react";
 import UserStats from "./UserStats";
 import { useUser } from "../context/UserContext";
 import { useSearchParams } from "react-router";
+import { useBreakpointValue } from "@chakra-ui/react";
 
 const UserProfile = () => {
+  const isDesktop = useBreakpointValue({ base: false, md: true });
   const [searchParams] = useSearchParams();
   const { loadUser } = useUser();
   const { user } = useUser();
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
 
-  if (!user) return null;
+  useEffect(() => {
+    const user = searchParams.get("user");
+    if (user) loadUser(user);
+  }, [searchParams]);
 
+  if (!user) return null;
   const {
     name,
     bio,
@@ -42,19 +48,20 @@ const UserProfile = () => {
     siteAdmin,
     twitterUserName,
     email,
+    blog,
   } = user;
-
-  useEffect(() => {
-    const user = searchParams.get("user");
-    if (user) loadUser(user);
-  }, [searchParams]);
 
   return (
     <>
       <Container color={theme.colors.brand.colorInfoUser}>
         <Box>
-          <Flex gap={4} align="center">
-            <Image src={avatar_url} alt={login} w="25%" rounded={"full"} />
+          <Flex gap={2} align="center" mx={{ sm: "50" }}>
+            <Image
+              src={avatar_url}
+              alt={login}
+              w={{ base: "40%", md: "80%", lg: "60%", xl: "50%" }}
+              rounded={"full"}
+            />
             <Box>
               <Text fontSize="20px" fontWeight="700" color={"black"}>
                 {name}
@@ -71,7 +78,7 @@ const UserProfile = () => {
             </Box>
           </Flex>
         </Box>
-        <Collapse startingHeight={45} in={show}>
+        <Collapse startingHeight={45} in={isDesktop || show}>
           <Box pt={4}>{bio}</Box>
 
           <Box pt={5}>
@@ -84,21 +91,50 @@ const UserProfile = () => {
             {twitterUserName && (
               <UserStats text={twitterUserName} image={userTwitter} />
             )}
+
+            <Center pt={5} pb={5} gap={3}>
+              {blog && (
+                <Button
+                  as="a"
+                  href={blog.startsWith("http") ? blog : `https://${blog}`}
+                  target="_blank"
+                  bgColor={theme.colors.brand.secondary}
+                  color="#FFFFFF"
+                  _hover={{ bgColor: theme.colors.brand.primary }}
+                >
+                  Site
+                </Button>
+              )}
+
+              {twitterUserName && (
+                <Button
+                  as="a"
+                  href={`https://twitter.com/${twitterUserName}`}
+                  target="_blank"
+                  bgColor={theme.colors.brand.secondary}
+                  color="#FFFFFF"
+                  _hover={{ bgColor: theme.colors.brand.primary }}
+                >
+                  Twitter
+                </Button>
+              )}
+            </Center>
           </Box>
-          
         </Collapse>
-        <Button
-          mt={5}
-          mb={5}
-          size="sm"
-          onClick={handleToggle}
-          bgColor={theme.colors.brand.secondary}
-          _hover={{ bgColor: theme.colors.brand.primary }}
-          _active={{ bgColor: theme.colors.brand.secondary }}
-          color="white"
-        >
-          Mostrar {show ? "Menos" : "Mais"}
-        </Button>
+        {!isDesktop && (
+          <Button
+            mt={5}
+            mb={5}
+            size="sm"
+            onClick={handleToggle}
+            bgColor={theme.colors.brand.secondary}
+            _hover={{ bgColor: theme.colors.brand.primary }}
+            _active={{ bgColor: theme.colors.brand.secondary }}
+            color="white"
+          >
+            Mostrar {show ? "Menos" : "Mais"}
+          </Button>
+        )}
       </Container>
     </>
   );

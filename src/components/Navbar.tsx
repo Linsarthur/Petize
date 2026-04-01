@@ -2,18 +2,19 @@ import { Box, Button, Center, Flex, Input, Text } from "@chakra-ui/react";
 import { theme } from "../themes/Themes";
 import search from "../assets/Vector.png";
 import { useUser } from "../context/UserContext";
-import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { loadUser } = useUser();
+  const location = useLocation(); // ✅
+  const { loadUser, error, user } = useUser();
   const [userName, setUsername] = useState("");
 
   const handleSearch = async () => {
     await loadUser(userName);
-    navigate(`/profile?user=${userName}`);
   };
+
   return (
     <>
       <Center flexDirection="column">
@@ -46,7 +47,7 @@ const Navbar = () => {
               <Input
                 value={userName}
                 onChange={(e) => setUsername(e.target.value)}
-                w={{ sm: "50vw", md: "20vw", lg: "40vw", xl: "25vw" }}
+                w={{ base: "80vw", md: "30vw", lg: "35vw", xl: "25vw" }}
                 bgImg={search}
                 bgRepeat="no-repeat"
                 bgPosition="12px center"
@@ -59,15 +60,19 @@ const Navbar = () => {
             <Button
               onClick={handleSearch}
               size="md"
-              w="100px"
+              w={{ base: "80vw", md: "100px" }}
               bgColor={theme.colors.brand.secondary}
               color="white"
               _hover={{ bgColor: theme.colors.brand.primary }}
-              mb={5}
             >
               Search
             </Button>
           </Flex>
+          {error && (
+            <Text color="red.500" mt={3} textAlign="center">
+              {error}
+            </Text>
+          )}
         </Flex>
       </Center>
     </>
