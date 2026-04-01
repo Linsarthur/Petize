@@ -23,13 +23,14 @@ const UserRepositorys = ({
   return (
     <Center>
       <Box
+        minH={{ base: "auto", md: "100px" }}
         px={5}
         pt={5}
         borderBottom="1px"
         pb={5}
         borderColor={theme.colors.brand.borderColor}
         w={{ base: "90vw", md: "60vw", lg: "50vw", xl: "40vw" }}
-        minH="100px"
+        
       >
         <Text>
           <Text
@@ -40,6 +41,10 @@ const UserRepositorys = ({
             fontWeight="700"
             fontSize="20px"
             noOfLines={1}
+            _hover={{
+              textDecoration: "underline",
+              color: theme.colors.brand.secondary,
+            }} // ✅
           >
             {name}
           </Text>
