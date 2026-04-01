@@ -2,18 +2,21 @@ import { Box, Button, Center, Flex, Input, Text } from "@chakra-ui/react";
 import { theme } from "../themes/Themes";
 import search from "../assets/Vector.png";
 import { useNavigate } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "../context/UserContext";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { loadUser } = useUser();
+  const { loadUser, error, user } = useUser();
   const [userName, setUsername] = useState("");
 
   const handleSearch = async () => {
     await loadUser(userName);
-    navigate(`/profile?user=${userName}`);
   };
+
+  useEffect(() => {
+    if (user) navigate("/profile");
+  }, [user]);
 
   return (
     <>
@@ -56,6 +59,11 @@ const Home = () => {
                 Search
               </Button>
             </Flex>
+            {error && (
+              <Text color="red.500" mt={3} textAlign="center">
+                {error}
+              </Text>
+            )}
           </Box>
         </Flex>
       </Center>
