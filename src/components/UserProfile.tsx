@@ -8,30 +8,48 @@ import {
   Image,
   Text,
 } from "@chakra-ui/react";
-import userImage from "../assets/avatar.png";
-import followers from "../assets/group.png";
-import likes from "../assets/heart.png";
-import company from "../assets/building.png";
-import location from "../assets/pin.png";
-import email from "../assets/mail.png";
-import link from "../assets/link.png";
-import twitter from "../assets/twitter.png";
+import userFollowers from "../assets/group.png";
+import userFollowing from "../assets/heart.png";
+import userCompany from "../assets/building.png";
+import userLocation from "../assets/pin.png";
+import userEmail from "../assets/mail.png";
+import userLink from "../assets/link.png";
+import userTwitter from "../assets/twitter.png";
 import { theme } from "../themes/Themes";
 import { useState } from "react";
 import UserStats from "./UserStats";
+import { useUser } from "../context/UserContext";
 
 const UserProfile = () => {
+  const { user } = useUser();
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
+
+  if (!user) return null;
+
+  const {
+    name,
+    bio,
+    login,
+    avatar_url,
+    followers,
+    following,
+    location,
+    company,
+    siteAdmin,
+    twitterUserName,
+    email,
+  } = user;
+
   return (
     <>
       <Container color={theme.colors.brand.colorInfoUser}>
         <Box>
           <Flex gap={4}>
-            <Image src={userImage} />
+            <Image src={avatar_url} alt={login} />
             <Box>
               <Text fontSize="20px" fontWeight="700" color={"black"}>
-                Users Name
+                {name}
               </Text>
               <Text
                 as="span"
@@ -40,28 +58,31 @@ const UserProfile = () => {
                 fontWeight="400"
                 letterSpacing="0"
               >
-                @usersNickname
+                @{login}
               </Text>
             </Box>
           </Flex>
         </Box>
         <Collapse startingHeight={45} in={show}>
-          <Box>
-            Desenvolvedor Full Stack - React | Node | Html | Css | JavaScript |
-            Firebase | MySQL | Express | Nest.js
-          </Box>
+          <Box>{bio}</Box>
 
           <Box pt={5}>
-            <UserStats text="240 Number of followers" image={followers} />
-            <UserStats text="240 Number of likes" image={likes} />
-            <UserStats text="Company that works" image={company} />
-            <UserStats text="City" image={location} />
-            <UserStats text="Email@email.com" image={email} />
-            <UserStats text="Link for own page" image={link} />
-            <UserStats text="Link Twitter" image={twitter} />
+            <UserStats text={followers + " Seguidores"} image={userFollowers} />
+            <UserStats text={following + " Seguindo"} image={userFollowing} />
+            {company && <UserStats text={company} image={userCompany} />}
+            {location && <UserStats text={location} image={userLocation} />}
+            {email && <UserStats text={email} image={userEmail} />}
+            {siteAdmin && <UserStats text={siteAdmin} image={userLink} />}
+            {twitterUserName && (
+              <UserStats text={twitterUserName} image={userTwitter} />
+            )}
           </Box>
           <Center pt={5} pb={5}>
-            <Button bgColor={theme.colors.brand.secondary} color="#FFFFFF">
+            <Button
+              bgColor={theme.colors.brand.secondary}
+              color="#FFFFFF"
+              _hover={{ bgColor: theme.colors.brand.primary }}
+            >
               Contato
             </Button>
           </Center>
@@ -73,9 +94,9 @@ const UserProfile = () => {
           onClick={handleToggle}
           bgColor={theme.colors.brand.secondary}
           _hover={{ bgColor: theme.colors.brand.primary }}
+          _active={{ bgColor: theme.colors.brand.secondary }}
           color="white"
         >
-          {" "}
           Mostrar {show ? "Menos" : "Mais"}
         </Button>
       </Container>

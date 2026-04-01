@@ -1,8 +1,21 @@
 import { Box, Button, Center, Flex, Input, Text } from "@chakra-ui/react";
 import { theme } from "../themes/Themes";
 import search from "../assets/Vector.png";
+import { Link, useNavigate } from "react-router";
+import { useState } from "react";
+import type { userProps } from "../types/user";
+import { useUser } from "../context/UserContext";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const { loadUser } = useUser();
+  const [userName, setUsername] = useState("");
+
+  const handleSearch = async () => {
+    await loadUser(userName);
+    navigate("/profile");
+  };
+
   return (
     <>
       <Center>
@@ -21,6 +34,7 @@ const Home = () => {
           <Box>
             <Flex gap="5" mx={5}>
               <Input
+                onChange={(e) => setUsername(e.target.value)}
                 w={{ sm: "60vw", md: "50vw", lg: "40vw", xl: "25vw" }}
                 bgImg={search}
                 bgRepeat="no-repeat"
@@ -29,17 +43,20 @@ const Home = () => {
                 placeholder="Github Profile"
                 focusBorderColor={theme.colors.brand.secondary}
               />
-              <Button
-                className="btn"
-                size="md"
-                w="150px"
-                bgColor={theme.colors.brand.secondary}
-                color="white"
-                _hover={{ bgColor: theme.colors.brand.primary }}
-              >
-                {" "}
-                Search{" "}
-              </Button>
+              
+                <Button
+                  onClick={handleSearch}
+                  className="btn"
+                  size="md"
+                  w="150px"
+                  bgColor={theme.colors.brand.secondary}
+                  color="white"
+                  _hover={{ bgColor: theme.colors.brand.primary }}
+                >
+                  {" "}
+                  Search
+                </Button>
+              
             </Flex>
           </Box>
         </Flex>
