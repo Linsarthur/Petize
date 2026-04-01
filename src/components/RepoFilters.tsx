@@ -15,13 +15,21 @@ const RepoFilters = ({
   onDirectionChange,
 }: FilterProps) => {
   return (
-    <Flex gap={4} px={5} py={3} align="center" justify={"end"}>
+    <Flex
+      gap={4}
+      px={5}
+      py={3}
+      align="center"
+      justify={{ base: "center", md: "end" }} // ✅
+      flexDirection={{ base: "column", md: "row" }} // ✅
+      w="100%"
+    >
       <Text fontWeight="600">Ordenar por:</Text>
 
       <Select
         value={sort}
         onChange={(e) => onSortChange(e.target.value)}
-        w="180px"
+        w={{ base: "80vw", md: "180px" }}
         focusBorderColor={theme.colors.brand.secondary}
       >
         <option value="updated">Atualização</option>
@@ -33,7 +41,7 @@ const RepoFilters = ({
       <Select
         value={direction}
         onChange={(e) => onDirectionChange(e.target.value)}
-        w="140px"
+        w={{ base: "80vw", md: "140px" }}
         focusBorderColor={theme.colors.brand.secondary}
       >
         <option value="desc">Decrescente</option>

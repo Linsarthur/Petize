@@ -5,6 +5,7 @@ type UserContextType = {
   user: userProps | null;
   repos: Repo[];
   setRepos: React.Dispatch<React.SetStateAction<Repo[]>>;
+  error: string | null;
   loadUser: (userName: string) => Promise<void>;
 };
 
@@ -24,11 +25,21 @@ const headers = {
 const UserContext = createContext<UserContextType | null>(null);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
+  const [error, setError] = useState<string | null>(null);
   const [user, setUser] = useState<userProps | null>(null);
   const [repos, setRepos] = useState<Repo[]>([]);
   const loadUser = async (userName: string) => {
-    const res = await fetch(`https://api.github.com/users/${userName}`, {headers});
+    setError(null);
+    setUser(null);
+    const res = await fetch(`https://api.github.com/users/${userName}`, {
+      headers,
+    });
     const data = await res.json();
+
+    if (data.message === "Not Found") {
+      setError("Não há usuários com esse nome.");
+      return;
+    }
 
     setUser({
       avatar_url: data.avatar_url,
@@ -42,11 +53,12 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       email: data.email,
       twitterUserName: data.twitter_username,
       siteAdmin: data.site_admin,
+      blog: data.blog,
     });
   };
 
   return (
-    <UserContext.Provider value={{ user, repos, setRepos, loadUser }}>
+    <UserContext.Provider value={{ user, repos, setRepos, error, loadUser }}>
       {children}
     </UserContext.Provider>
   );

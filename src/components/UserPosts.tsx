@@ -3,6 +3,9 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { useUser } from "../context/UserContext";
 import UserRepositorys from "./UserRepositorys";
 import RepoFilters from "./RepoFilters";
+const headers = {
+  Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
+};
 
 const UserPosts = () => {
   const { user, repos, setRepos } = useUser();
@@ -12,12 +15,6 @@ const UserPosts = () => {
   const [sort, setSort] = useState("updated");
   const [direction, setDirection] = useState("desc");
   const observerRef = useRef<IntersectionObserver | null>(null);
-
-
-  const headers = {
-  Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
-};
-
 
   const lastRepoRef = useCallback(
     (node: HTMLDivElement | null) => {
@@ -46,7 +43,8 @@ const UserPosts = () => {
     const fetchRepos = async () => {
       setLoading(true);
       const res = await fetch(
-        `https://api.github.com/users/${user.login}/repos?per_page=10&page=1&sort=${sort}&direction=${direction}`, {headers},
+        `https://api.github.com/users/${user.login}/repos?per_page=10&page=1&sort=${sort}&direction=${direction}`,
+        { headers },
       );
       const data = await res.json();
 
@@ -67,7 +65,8 @@ const UserPosts = () => {
     const fetchMore = async () => {
       setLoading(true);
       const res = await fetch(
-        `https://api.github.com/users/${user.login}/repos?per_page=10&page=${page}&sort=${sort}&direction=${direction}`, {headers},
+        `https://api.github.com/users/${user.login}/repos?per_page=10&page=${page}&sort=${sort}&direction=${direction}`,
+        { headers },
       );
       const data = await res.json();
 
