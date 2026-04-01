@@ -19,21 +19,21 @@ import { theme } from "../themes/Themes";
 import { useEffect, useState } from "react";
 import UserStats from "./UserStats";
 import { useUser } from "../context/UserContext";
-import { useSearchParams } from "react-router";
+import { useParams, useSearchParams } from "react-router";
 import { useBreakpointValue } from "@chakra-ui/react";
 
 const UserProfile = () => {
   const isDesktop = useBreakpointValue({ base: false, md: true });
-  const [searchParams] = useSearchParams();
+  const {username} = useParams();
   const { loadUser } = useUser();
   const { user } = useUser();
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
 
   useEffect(() => {
-    const user = searchParams.get("user");
-    if (user) loadUser(user);
-  }, [searchParams]);
+    const user = loadUser("user");
+    if (username) loadUser(username);
+  }, [username]);
 
   if (!user) return null;
   const {

@@ -13,6 +13,7 @@ const Navbar = () => {
 
   const handleSearch = async () => {
     await loadUser(userName);
+    navigate(`/profile/${userName}`); 
   };
 
   return (
