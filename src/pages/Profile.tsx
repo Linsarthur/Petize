@@ -7,7 +7,7 @@ const Profile = () => {
     <>
       <Navbar />
       <UserProfile />
-      <UserPosts/>
+      <UserPosts />
     </>
   );
 };
