@@ -3,6 +3,8 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { useUser } from "../context/UserContext";
 import UserRepositorys from "./UserRepositorys";
 import RepoFilters from "./RepoFilters";
+import { RepoListSchema } from "../schemas/github";
+
 const headers = {
   Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
 };
@@ -47,6 +49,24 @@ const UserPosts = () => {
         { headers },
       );
       const data = await res.json();
+      const parsed = RepoListSchema.safeParse(data);
+
+      if (!parsed.success) return;
+
+      if (parsed.data.length === 0) {
+        setHasMore(false);
+      } else {
+        setRepos(
+          parsed.data.map((repo) => ({
+            id: repo.id,
+            name: repo.name,
+            description: repo.description ?? "",
+            stargazers_count: repo.stargazers_count,
+            updated_at: repo.updated_at,
+            html_url: repo.html_url,
+          })),
+        );
+      }
 
       if (data.length === 0) {
         setHasMore(false);
