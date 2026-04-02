@@ -24,12 +24,13 @@ const UserRepositorys = ({
     i18n.language === "pt" ? "pt-BR" : "en-US", // ✅
   );
   return (
-    <Center>
+    <>
       <Box
         minH={{ base: "auto", md: "100px" }}
-        px={5}
+        pl={{sm:10, md: "5%"}}
         pt={5}
         borderBottom="1px"
+        borderWidth="100%"
         pb={5}
         borderColor={theme.colors.brand.borderColor}
         w={{ base: "90vw", md: "60vw", lg: "50vw", xl: "40vw" }}
@@ -54,7 +55,7 @@ const UserRepositorys = ({
             {description || t("noDescription")}
           </Text>
         </Text>
-        <Flex align="center" pt={3} gap={2}>
+        <Flex align="" pt={3} gap={2}>
           <Image src={star} />
           <Text as="span">{stars}</Text>
           <BsDot />
@@ -63,7 +64,7 @@ const UserRepositorys = ({
           </Text>{" "}
         </Flex>
       </Box>
-    </Center>
+    </>
   );
 };
 

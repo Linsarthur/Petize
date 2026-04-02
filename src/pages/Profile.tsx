@@ -5,23 +5,24 @@ import { Flex, Box } from "@chakra-ui/react";
 
 const Profile = () => {
   return (
-     <>
+    <>
       <Navbar />
       <Flex
-        flexDirection={{ base: "column", md: "row" }}
-        align={{ base: "center", md: "flex-start" }}
-        pl={{ base: 0, md: "30" }}
-        pr={{ base: 0, md: "60" }}
+        flexDirection={{ base: "column", lg: "row" }}
+        align={{ base: "center", lg: "flex-start" }}
+        px={{ base: 4, md: 10, lg: 20 }}
         pt={5}
+        justify="center"
+        gap={10}
       >
         <Box
-          w={{ base: "100%", md: "300px" }}
-          flexShrink={0} // ✅ impede o perfil de encolher
+          w={{ base: "100%", md: "70vw", lg: "300px" }}
+          flexShrink={0}
         >
           <UserProfile />
         </Box>
 
-        <Box flex={1} w="100%"> 
+        <Box flex={1} w={{ base: "100%", md: "70vw" }}>
           <UserPosts />
         </Box>
       </Flex>
