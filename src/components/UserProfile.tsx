@@ -19,12 +19,14 @@ import { theme } from "../themes/Themes";
 import { useEffect, useState } from "react";
 import UserStats from "./UserStats";
 import { useUser } from "../context/UserContext";
-import { useParams, useSearchParams } from "react-router";
+import { useParams } from "react-router";
 import { useBreakpointValue } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 
 const UserProfile = () => {
+  const { t } = useTranslation();
   const isDesktop = useBreakpointValue({ base: false, md: true });
-  const {username} = useParams();
+  const { username } = useParams();
   const { loadUser } = useUser();
   const { user } = useUser();
   const [show, setShow] = useState(false);
@@ -55,15 +57,15 @@ const UserProfile = () => {
     <>
       <Container color={theme.colors.brand.colorInfoUser}>
         <Box>
-          <Flex gap={2} align="center" mx={{ sm: "50" }}>
+          <Flex gap={2} align="center">
             <Image
               src={avatar_url}
               alt={login}
-              w={{ base: "40%", md: "80%", lg: "60%", xl: "50%" }}
-              rounded={"full"}
+              w={{ base: "40%", md: "40%", lg: "60%", xl: "50%" }}
+              rounded="full"
             />
             <Box>
-              <Text fontSize="20px" fontWeight="700" color={"black"}>
+              <Text fontSize="20px" fontWeight="700" color="black">
                 {name}
               </Text>
               <Text
@@ -82,8 +84,14 @@ const UserProfile = () => {
           <Box pt={4}>{bio}</Box>
 
           <Box pt={5}>
-            <UserStats text={followers + " Seguidores"} image={userFollowers} />
-            <UserStats text={following + " Seguindo"} image={userFollowing} />
+            <UserStats
+              text={`${followers} ${t("followers")}`}
+              image={userFollowers}
+            />{" "}
+            <UserStats
+              text={`${following} ${t("following")}`}
+              image={userFollowing}
+            />{" "}
             {company && <UserStats text={company} image={userCompany} />}
             {location && <UserStats text={location} image={userLocation} />}
             {email && <UserStats text={email} image={userEmail} />}
@@ -91,7 +99,6 @@ const UserProfile = () => {
             {twitterUserName && (
               <UserStats text={twitterUserName} image={userTwitter} />
             )}
-
             <Center pt={5} pb={5} gap={3}>
               {blog && (
                 <Button
@@ -102,10 +109,9 @@ const UserProfile = () => {
                   color="#FFFFFF"
                   _hover={{ bgColor: theme.colors.brand.primary }}
                 >
-                  Site
+                  {t("site")}
                 </Button>
               )}
-
               {twitterUserName && (
                 <Button
                   as="a"
@@ -115,7 +121,7 @@ const UserProfile = () => {
                   color="#FFFFFF"
                   _hover={{ bgColor: theme.colors.brand.primary }}
                 >
-                  Twitter
+                  {t("twitter")}
                 </Button>
               )}
             </Center>
@@ -132,7 +138,7 @@ const UserProfile = () => {
             _active={{ bgColor: theme.colors.brand.secondary }}
             color="white"
           >
-            Mostrar {show ? "Menos" : "Mais"}
+            {show ? t("showLess") : t("showMore")}
           </Button>
         )}
       </Container>

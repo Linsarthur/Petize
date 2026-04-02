@@ -10,6 +10,7 @@ import { Box, Center, Flex, Image, Text } from "@chakra-ui/react";
 import { theme } from "../themes/Themes";
 import star from "../assets/star.png";
 import { BsDot } from "react-icons/bs";
+import { useTranslation } from "react-i18next";
 
 const UserRepositorys = ({
   name,
@@ -18,8 +19,10 @@ const UserRepositorys = ({
   updatedAt,
   url,
 }: RepoProps) => {
-  const date = new Date(updatedAt).toLocaleDateString("pt-BR");
-
+  const { t, i18n } = useTranslation();
+  const date = new Date(updatedAt).toLocaleDateString(
+    i18n.language === "pt" ? "pt-BR" : "en-US", // ✅
+  );
   return (
     <Center>
       <Box
@@ -30,7 +33,6 @@ const UserRepositorys = ({
         pb={5}
         borderColor={theme.colors.brand.borderColor}
         w={{ base: "90vw", md: "60vw", lg: "50vw", xl: "40vw" }}
-        
       >
         <Text>
           <Text
@@ -44,19 +46,21 @@ const UserRepositorys = ({
             _hover={{
               textDecoration: "underline",
               color: theme.colors.brand.secondary,
-            }} // ✅
+            }}
           >
             {name}
           </Text>
           <Text color={theme.colors.brand.colorInfoUser} noOfLines={2}>
-            {description || "Sem descrição"}
+            {description || t("noDescription")}
           </Text>
         </Text>
         <Flex align="center" pt={3} gap={2}>
           <Image src={star} />
           <Text as="span">{stars}</Text>
           <BsDot />
-          <Text>Atualizado em {date}</Text>
+          <Text>
+            {t("updatedAt")} {date}
+          </Text>{" "}
         </Flex>
       </Box>
     </Center>
