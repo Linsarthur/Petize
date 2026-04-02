@@ -27,6 +27,7 @@ i18n.use(initReactI18next).init({
         ascending: "Crescente",
         site: "Site",
         twitter: "Twitter",
+        contact: "Contato",
       },
     },
     en: {
@@ -51,6 +52,7 @@ i18n.use(initReactI18next).init({
         ascending: "Ascending",
         site: "Site",
         twitter: "Twitter",
+        contact: "Contact",
       },
     },
   },

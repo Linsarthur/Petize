@@ -21,9 +21,9 @@ const RepoFilters = ({
     <Flex
       gap={4}
       px={5}
-      py={3}
+      pb={3}
       align="center"
-      justify={{ base: "center", md: "end" }}
+      justify={{ base: "center", md: "center" }}
       flexDirection={{ base: "column", md: "row" }}
       w="100%"
     >
