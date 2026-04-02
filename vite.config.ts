@@ -4,7 +4,6 @@ import babel from "@rolldown/plugin-babel";
 
 
 export default defineConfig({
-  base: "/Petize/",
   plugins: [react(), babel({ presets: [reactCompilerPreset()] })],
   build: {
     rollupOptions: {
