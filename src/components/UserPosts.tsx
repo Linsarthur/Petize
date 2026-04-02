@@ -4,12 +4,14 @@ import { useUser } from "../context/UserContext";
 import UserRepositorys from "./UserRepositorys";
 import RepoFilters from "./RepoFilters";
 import { RepoListSchema } from "../schemas/github";
+import { useTranslation } from "react-i18next";
 
 const headers = {
   Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
 };
 
 const UserPosts = () => {
+  const { t } = useTranslation();
   const { user, repos, setRepos } = useUser();
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -25,7 +27,7 @@ const UserPosts = () => {
 
       observerRef.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
-          setPage((prev) => prev + 1); // ✅ quando chegar no final, avança a página
+          setPage((prev) => prev + 1);
         }
       });
 
@@ -133,7 +135,7 @@ const UserPosts = () => {
 
       {!hasMore && (
         <Center py={5}>
-          <Text color="gray.500">Sem mais repositórios</Text>
+          <Text color="gray.500">{t("noMoreRepos")}</Text>
         </Center>
       )}
     </Box>
