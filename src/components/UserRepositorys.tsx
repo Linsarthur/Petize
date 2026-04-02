@@ -6,7 +6,7 @@ type RepoProps = {
   url: string;
 };
 
-import { Box, Center, Flex, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import { theme } from "../themes/Themes";
 import star from "../assets/star.png";
 import { BsDot } from "react-icons/bs";
