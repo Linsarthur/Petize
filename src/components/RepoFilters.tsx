@@ -1,5 +1,6 @@
 import { Flex, Select, Text } from "@chakra-ui/react";
 import { theme } from "../themes/Themes";
+import { useTranslation } from "react-i18next";
 
 type FilterProps = {
   sort: string;
@@ -14,17 +15,19 @@ const RepoFilters = ({
   onSortChange,
   onDirectionChange,
 }: FilterProps) => {
+  const { t } = useTranslation();
+
   return (
     <Flex
       gap={4}
       px={5}
       py={3}
       align="center"
-      justify={{ base: "center", md: "end" }} // ✅
-      flexDirection={{ base: "column", md: "row" }} // ✅
+      justify={{ base: "center", md: "end" }}
+      flexDirection={{ base: "column", md: "row" }}
       w="100%"
     >
-      <Text fontWeight="600">Ordenar por:</Text>
+      <Text fontWeight="600">{t("orderBy")}</Text>
 
       <Select
         value={sort}
@@ -32,10 +35,10 @@ const RepoFilters = ({
         w={{ base: "80vw", md: "180px" }}
         focusBorderColor={theme.colors.brand.secondary}
       >
-        <option value="updated">Atualização</option>
-        <option value="created">Criação</option>
-        <option value="pushed">Último push</option>
-        <option value="full_name">Nome</option>
+        <option value="updated">{t("updated")}</option>
+        <option value="created">{t("created")}</option>
+        <option value="pushed">{t("pushed")}</option>
+        <option value="full_name">{t("fullName")}</option>
       </Select>
 
       <Select
@@ -44,8 +47,8 @@ const RepoFilters = ({
         w={{ base: "80vw", md: "140px" }}
         focusBorderColor={theme.colors.brand.secondary}
       >
-        <option value="desc">Decrescente</option>
-        <option value="asc">Crescente</option>
+        <option value="desc">{t("descending")}</option>
+        <option value="asc">{t("ascending")}</option>
       </Select>
     </Flex>
   );

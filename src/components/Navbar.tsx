@@ -3,19 +3,27 @@ import { theme } from "../themes/Themes";
 import search from "../assets/Vector.png";
 import { useUser } from "../context/UserContext";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import {  useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
+import i18n from "../i18n";
 
 const Navbar = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
-  const location = useLocation(); // ✅
   const { loadUser, error, user } = useUser();
   const [userName, setUsername] = useState("");
 
   const handleSearch = async () => {
     await loadUser(userName);
-    navigate(`/profile/${userName}`); 
   };
 
+  useEffect(() => {
+    if (user) navigate(`/profile/${user.login}`);
+  }, [user]);
+
+  const changeLanguage = (lang: string) => {
+    i18n.changeLanguage(lang);
+  };
   return (
     <>
       <Center flexDirection="column">
@@ -44,19 +52,17 @@ const Navbar = () => {
             alignItems="center"
             gap={3}
           >
-            <Box>
-              <Input
-                value={userName}
-                onChange={(e) => setUsername(e.target.value)}
-                w={{ base: "80vw", md: "30vw", lg: "35vw", xl: "25vw" }}
-                bgImg={search}
-                bgRepeat="no-repeat"
-                bgPosition="12px center"
-                px={10}
-                placeholder="Github Profile"
-                focusBorderColor={theme.colors.brand.secondary}
-              />
-            </Box>
+            <Input
+              value={userName}
+              onChange={(e) => setUsername(e.target.value)}
+              w={{ base: "80vw", md: "30vw", lg: "35vw", xl: "25vw" }}
+              bgImg={search}
+              bgRepeat="no-repeat"
+              bgPosition="12px center"
+              px={10}
+              placeholder={t("placeholder")} 
+              focusBorderColor={theme.colors.brand.secondary}
+            />
 
             <Button
               onClick={handleSearch}
@@ -66,14 +72,34 @@ const Navbar = () => {
               color="white"
               _hover={{ bgColor: theme.colors.brand.primary }}
             >
-              Search
+              {t("search")} 
             </Button>
           </Flex>
+
           {error && (
             <Text color="red.500" mt={3} textAlign="center">
-              {error}
+              {t(error)} 
             </Text>
           )}
+        </Flex>
+
+        <Flex gap={2} mb={4}>
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={() => changeLanguage("pt")}
+            fontWeight={i18n.language === "pt" ? "bold" : "normal"}
+          >
+            PT
+          </Button>
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={() => changeLanguage("en")}
+            fontWeight={i18n.language === "en" ? "bold" : "normal"}
+          >
+            EN
+          </Button>
         </Flex>
       </Center>
     </>
