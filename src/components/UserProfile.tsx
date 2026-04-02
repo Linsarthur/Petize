@@ -16,7 +16,6 @@ import { useEffect, useState } from "react";
 import UserStats from "./UserStats";
 import { useUser } from "../context/UserContext";
 import { useParams } from "react-router";
-import { useBreakpointValue } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
 
 const UserProfile = () => {
@@ -24,7 +23,6 @@ const UserProfile = () => {
   const { username } = useParams();
   const { loadUser } = useUser();
   const { user } = useUser();
-  const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (username) loadUser(username);
