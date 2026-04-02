@@ -1,9 +1,6 @@
 import {
   Box,
   Button,
-  Center,
-  Collapse,
-  Container,
   Flex,
   Image,
   Text,
@@ -24,15 +21,12 @@ import { useTranslation } from "react-i18next";
 
 const UserProfile = () => {
   const { t } = useTranslation();
-  const isDesktop = useBreakpointValue({ base: false, md: true });
   const { username } = useParams();
   const { loadUser } = useUser();
   const { user } = useUser();
   const [show, setShow] = useState(false);
-  const handleToggle = () => setShow(!show);
 
   useEffect(() => {
-    const user = loadUser("user");
     if (username) loadUser(username);
   }, [username]);
 
@@ -51,7 +45,7 @@ const UserProfile = () => {
     blog,
   } = user;
 
-  const hasContact = !!email;
+ 
 
   return (
    <>
