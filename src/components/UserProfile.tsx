@@ -12,7 +12,7 @@ import userLocation from "../assets/pin.png";
 import userEmail from "../assets/mail.png";
 import userTwitter from "../assets/twitter.png";
 import { theme } from "../themes/Themes";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import UserStats from "./UserStats";
 import { useUser } from "../context/UserContext";
 import { useParams } from "react-router";
